@@ -3,13 +3,13 @@ runConfig:
 
 env:
   - variable: NEXT_PUBLIC_APP_URL
-    value: https://modastore.web.app
+    value: https://ecommercederopa.netlify.app
     availability:
       - BUILD
       - RUNTIME
 
   - variable: BETTER_AUTH_URL
-    value: https://modastore.web.app
+    value: https://ecommercederopa.netlify.app
     availability:
       - BUILD
       - RUNTIME
