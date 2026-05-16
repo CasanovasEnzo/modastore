@@ -1,0 +1,33 @@
+runConfig:
+  runtime: nodejs20
+
+env:
+  - variable: NEXT_PUBLIC_APP_URL
+    value: https://modastore.web.app
+    availability:
+      - BUILD
+      - RUNTIME
+
+  - variable: BETTER_AUTH_URL
+    value: https://modastore.web.app
+    availability:
+      - BUILD
+      - RUNTIME
+
+  - variable: ADMIN_EMAIL
+    value: casanovasenzo2@gmail.com
+    availability:
+      - BUILD
+      - RUNTIME
+
+  - variable: DATABASE_URL
+    secret: DATABASE_URL
+
+  - variable: BETTER_AUTH_SECRET
+    secret: BETTER_AUTH_SECRET
+
+  - variable: GOOGLE_CLIENT_ID
+    secret: GOOGLE_CLIENT_ID
+
+  - variable: GOOGLE_CLIENT_SECRET
+    secret: GOOGLE_CLIENT_SECRET
