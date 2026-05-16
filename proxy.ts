@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server"
 import { auth } from "@/lib/auth"
-import { prisma } from "@/lib/prisma"
 
 const publicAuthRoutes = ["/login", "/registro"]
 const protectedRoutes = ["/mis-ordenes", "/orden", "/perfil"]
@@ -22,14 +21,8 @@ export default async function proxy(req: NextRequest) {
     return NextResponse.redirect(new URL(`/login?redirect=${path}`, req.nextUrl))
   }
 
-  if (isAdmin && session) {
-    const user = await prisma.user.findUnique({
-      where: { id: session.user.id },
-      select: { role: true },
-    })
-    if (user?.role !== "admin") {
-      return NextResponse.redirect(new URL("/", req.nextUrl))
-    }
+  if (isAdmin && session && (session.user as { role?: string }).role !== "admin") {
+    return NextResponse.redirect(new URL("/", req.nextUrl))
   }
 
   return NextResponse.next()
