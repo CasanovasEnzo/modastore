@@ -2,6 +2,13 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
+async function setImage(productId: string, url: string, altText: string) {
+  const count = await prisma.productImage.count({ where: { productId } })
+  if (count === 0) {
+    await prisma.productImage.create({ data: { productId, url, altText, position: 0 } })
+  }
+}
+
 async function main() {
   const remeras = await prisma.category.upsert({
     where: { slug: "remeras" },
@@ -22,7 +29,7 @@ async function main() {
   });
 
   // --- Unisex ---
-  await prisma.product.upsert({
+  const remeraBlanca = await prisma.product.upsert({
     where: { slug: "remera-basica-blanca" },
     update: { gender: "unisex" },
     create: {
@@ -36,8 +43,9 @@ async function main() {
       ]},
     },
   });
+  await setImage(remeraBlanca.id, "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=600&q=80", "Remera básica blanca");
 
-  await prisma.product.upsert({
+  const remeraOversize = await prisma.product.upsert({
     where: { slug: "remera-negra-oversize" },
     update: { gender: "unisex" },
     create: {
@@ -51,9 +59,10 @@ async function main() {
       ]},
     },
   });
+  await setImage(remeraOversize.id, "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=600&q=80", "Remera negra oversize");
 
   // --- Hombre ---
-  await prisma.product.upsert({
+  const jeanSlim = await prisma.product.upsert({
     where: { slug: "jean-slim-azul" },
     update: { gender: "hombre" },
     create: {
@@ -67,8 +76,9 @@ async function main() {
       ]},
     },
   });
+  await setImage(jeanSlim.id, "https://images.unsplash.com/photo-1542272604-787c3835535d?w=600&q=80", "Jean slim azul");
 
-  await prisma.product.upsert({
+  const cargo = await prisma.product.upsert({
     where: { slug: "pantalon-cargo-verde" },
     update: { gender: "hombre" },
     create: {
@@ -81,8 +91,9 @@ async function main() {
       ]},
     },
   });
+  await setImage(cargo.id, "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=600&q=80", "Pantalón cargo verde");
 
-  await prisma.product.upsert({
+  const mangaLarga = await prisma.product.upsert({
     where: { slug: "remera-manga-larga-hombre" },
     update: {},
     create: {
@@ -97,8 +108,9 @@ async function main() {
       ]},
     },
   });
+  await setImage(mangaLarga.id, "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?w=600&q=80", "Remera manga larga gris");
 
-  await prisma.product.upsert({
+  const cinturon = await prisma.product.upsert({
     where: { slug: "cinturon-negro" },
     update: {},
     create: {
@@ -111,9 +123,10 @@ async function main() {
       ]},
     },
   });
+  await setImage(cinturon.id, "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=600&q=80", "Cinturón negro liso");
 
   // --- Mujer ---
-  await prisma.product.upsert({
+  const tirantes = await prisma.product.upsert({
     where: { slug: "remera-tirantes-beige" },
     update: {},
     create: {
@@ -127,8 +140,9 @@ async function main() {
       ]},
     },
   });
+  await setImage(tirantes.id, "https://images.unsplash.com/photo-1566206091558-7f218b696731?w=600&q=80", "Remera tirantes beige");
 
-  await prisma.product.upsert({
+  const jeanFlare = await prisma.product.upsert({
     where: { slug: "jean-flare-negro" },
     update: {},
     create: {
@@ -142,8 +156,9 @@ async function main() {
       ]},
     },
   });
+  await setImage(jeanFlare.id, "https://images.unsplash.com/photo-1509631179647-0177331693ae?w=600&q=80", "Jean flare negro");
 
-  await prisma.product.upsert({
+  const cropBlanca = await prisma.product.upsert({
     where: { slug: "remera-crop-blanca" },
     update: {},
     create: {
@@ -157,8 +172,9 @@ async function main() {
       ]},
     },
   });
+  await setImage(cropBlanca.id, "https://images.unsplash.com/photo-1622290291468-a28f7a7dc6a8?w=600&q=80", "Remera crop blanca");
 
-  await prisma.product.upsert({
+  const tote = await prisma.product.upsert({
     where: { slug: "bolsa-tote-canvas" },
     update: {},
     create: {
@@ -170,6 +186,7 @@ async function main() {
       ]},
     },
   });
+  await setImage(tote.id, "https://images.unsplash.com/photo-1544816155-12df9643f363?w=600&q=80", "Bolsa tote canvas");
 
   // Asignar rol admin
   const adminEmail = process.env.ADMIN_EMAIL;

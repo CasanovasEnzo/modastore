@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
+import Image from "next/image";
 
 interface Product {
   id: string;
@@ -10,6 +11,7 @@ interface Product {
   gender: string;
   category: { name: string; slug: string };
   variants: { size: string; color: string }[];
+  images: { url: string; altText: string | null }[];
 }
 
 const GENEROS = [
@@ -162,28 +164,31 @@ function ProductosContent() {
           </div>
         ) : (
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {filtered.map((p, i) => (
+            {filtered.map((p) => (
               <a key={p.id} href={`/productos/${p.slug}`} className="group">
-                <div
-                  className={`aspect-[3/4] rounded-2xl mb-4 flex flex-col justify-between p-5 border border-white/5 group-hover:border-white/20 transition duration-300 ${
-                    i % 3 === 0
-                      ? "bg-gradient-to-br from-zinc-800 to-zinc-900"
-                      : i % 3 === 1
-                      ? "bg-gradient-to-br from-stone-800 to-stone-900"
-                      : "bg-gradient-to-br from-neutral-800 to-neutral-900"
-                  }`}
-                >
-                  <div className="flex justify-between items-start">
-                    <span className="text-xs bg-white/10 px-3 py-1.5 rounded-full text-white/50">
+                <div className="aspect-[3/4] rounded-2xl mb-4 overflow-hidden border border-white/5 group-hover:border-white/20 transition duration-300 relative bg-zinc-900">
+                  {p.images[0] ? (
+                    <Image
+                      src={p.images[0].url}
+                      alt={p.images[0].altText ?? p.name}
+                      fill
+                      className="object-cover group-hover:scale-105 transition duration-500"
+                      sizes="(max-width: 768px) 50vw, 25vw"
+                    />
+                  ) : (
+                    <div className="w-full h-full bg-gradient-to-br from-zinc-800 to-zinc-900" />
+                  )}
+                  <div className="absolute inset-0 p-4 flex flex-col justify-between">
+                    <span className="text-xs bg-black/40 backdrop-blur-sm px-3 py-1.5 rounded-full text-white/70 w-fit">
                       {p.category.name}
                     </span>
-                  </div>
-                  <div className="flex gap-1 flex-wrap">
-                    {p.variants.slice(0, 4).map((v) => (
-                      <span key={v.size} className="text-xs text-white/30">
-                        {v.size}
-                      </span>
-                    ))}
+                    <div className="flex gap-1 flex-wrap">
+                      {p.variants.slice(0, 4).map((v) => (
+                        <span key={v.size} className="text-xs text-white/60 bg-black/40 backdrop-blur-sm px-2 py-0.5 rounded-full">
+                          {v.size}
+                        </span>
+                      ))}
+                    </div>
                   </div>
                 </div>
                 <p className="font-medium text-sm text-white">{p.name}</p>

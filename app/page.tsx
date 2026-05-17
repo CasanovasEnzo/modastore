@@ -1,6 +1,7 @@
 import { auth } from "@/lib/auth"
 import { headers } from "next/headers"
 import { redirect } from "next/navigation"
+import Image from "next/image"
 
 export default async function HomePage() {
   const session = await auth.api.getSession({ headers: await headers() })
@@ -40,10 +41,35 @@ export default async function HomePage() {
 
         {/* Hero grid de imágenes */}
         <div className="mt-24 w-full max-w-5xl grid grid-cols-3 gap-4">
-          <div className="col-span-2 aspect-[16/9] bg-gradient-to-br from-white/10 to-white/5 rounded-2xl" />
+          <div className="col-span-2 aspect-[16/9] rounded-2xl overflow-hidden relative">
+            <Image
+              src="https://images.unsplash.com/photo-1445205170230-053b83016050?w=1200&q=80"
+              alt="Colección Modastore"
+              fill
+              className="object-cover"
+              sizes="66vw"
+              priority
+            />
+          </div>
           <div className="flex flex-col gap-4">
-            <div className="flex-1 bg-gradient-to-br from-white/10 to-white/5 rounded-2xl" />
-            <div className="flex-1 bg-gradient-to-br from-white/10 to-white/5 rounded-2xl" />
+            <div className="flex-1 rounded-2xl overflow-hidden relative min-h-[120px]">
+              <Image
+                src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80"
+                alt="Street style"
+                fill
+                className="object-cover"
+                sizes="33vw"
+              />
+            </div>
+            <div className="flex-1 rounded-2xl overflow-hidden relative min-h-[120px]">
+              <Image
+                src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=600&q=80"
+                alt="Colección minimalista"
+                fill
+                className="object-cover"
+                sizes="33vw"
+              />
+            </div>
           </div>
         </div>
       </section>
@@ -60,16 +86,26 @@ export default async function HomePage() {
       <section className="max-w-7xl mx-auto px-8 pb-24">
         <div className="grid grid-cols-3 gap-4">
           {[
-            { name: "Remeras", slug: "remeras", items: "5 productos", bg: "from-zinc-800 to-zinc-900" },
-            { name: "Pantalones", slug: "pantalones", items: "3 productos", bg: "from-stone-800 to-stone-900" },
-            { name: "Accesorios", slug: "accesorios", items: "2 productos", bg: "from-neutral-800 to-neutral-900" },
+            { name: "Remeras", slug: "remeras", items: "5 productos", img: "https://images.unsplash.com/photo-1529374255404-311a2a4f1fd9?w=800&q=80" },
+            { name: "Pantalones", slug: "pantalones", items: "3 productos", img: "https://images.unsplash.com/photo-1542272604-787c3835535d?w=800&q=80" },
+            { name: "Accesorios", slug: "accesorios", items: "2 productos", img: "https://images.unsplash.com/photo-1544816155-12df9643f363?w=800&q=80" },
           ].map((cat) => (
             <a key={cat.name} href={`/productos?categoria=${cat.slug}`}
-              className={`group bg-gradient-to-br ${cat.bg} rounded-3xl p-8 aspect-[4/3] flex flex-col justify-end border border-white/5 hover:border-white/20 transition duration-300`}>
-              <p className="text-xs text-white/30 mb-2">{cat.items}</p>
-              <div className="flex items-center justify-between">
-                <p className="text-2xl font-bold">{cat.name}</p>
-                <span className="text-white/30 group-hover:text-white group-hover:translate-x-1 transition duration-300">→</span>
+              className="group rounded-3xl aspect-[4/3] flex flex-col justify-end border border-white/5 hover:border-white/20 transition duration-300 overflow-hidden relative">
+              <Image
+                src={cat.img}
+                alt={cat.name}
+                fill
+                className="object-cover group-hover:scale-105 transition duration-500"
+                sizes="33vw"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+              <div className="relative p-8">
+                <p className="text-xs text-white/50 mb-2">{cat.items}</p>
+                <div className="flex items-center justify-between">
+                  <p className="text-2xl font-bold">{cat.name}</p>
+                  <span className="text-white/30 group-hover:text-white group-hover:translate-x-1 transition duration-300">→</span>
+                </div>
               </div>
             </a>
           ))}
@@ -87,16 +123,25 @@ export default async function HomePage() {
         </div>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {[
-            { name: "Remera esencial", price: "15.000", tag: "Básico", color: "from-zinc-700 to-zinc-800" },
-            { name: "Oversize negra", price: "18.000", tag: "Más vendido", color: "from-neutral-800 to-black" },
-            { name: "Jean slim", price: "35.000", tag: "Nuevo", color: "from-slate-700 to-slate-800" },
-            { name: "Cargo verde", price: "28.000", tag: "Tendencia", color: "from-stone-700 to-stone-800" },
-          ].map((p, i) => (
-            <a key={i} href="/productos" className="group">
-              <div className={`aspect-[3/4] rounded-2xl mb-4 bg-gradient-to-br ${p.color} flex flex-col justify-between p-5 border border-white/5 group-hover:border-white/20 transition duration-300`}>
-                <span className="text-xs font-medium bg-white/10 backdrop-blur px-3 py-1.5 rounded-full w-fit text-white/70">
-                  {p.tag}
-                </span>
+            { name: "Remera esencial", slug: "remera-basica-blanca", price: "15.000", tag: "Básico", img: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=600&q=80" },
+            { name: "Oversize negra", slug: "remera-negra-oversize", price: "18.000", tag: "Más vendido", img: "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=600&q=80" },
+            { name: "Jean slim", slug: "jean-slim-azul", price: "35.000", tag: "Nuevo", img: "https://images.unsplash.com/photo-1542272604-787c3835535d?w=600&q=80" },
+            { name: "Cargo verde", slug: "pantalon-cargo-verde", price: "28.000", tag: "Tendencia", img: "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=600&q=80" },
+          ].map((p) => (
+            <a key={p.slug} href={`/productos/${p.slug}`} className="group">
+              <div className="aspect-[3/4] rounded-2xl mb-4 overflow-hidden relative bg-zinc-900 border border-white/5 group-hover:border-white/20 transition duration-300">
+                <Image
+                  src={p.img}
+                  alt={p.name}
+                  fill
+                  className="object-cover group-hover:scale-105 transition duration-500"
+                  sizes="(max-width: 768px) 50vw, 25vw"
+                />
+                <div className="absolute inset-0 p-4">
+                  <span className="text-xs font-medium bg-black/40 backdrop-blur-sm px-3 py-1.5 rounded-full text-white/80">
+                    {p.tag}
+                  </span>
+                </div>
               </div>
               <p className="font-medium text-sm text-white">{p.name}</p>
               <p className="text-white/40 text-sm mt-0.5">${p.price}</p>

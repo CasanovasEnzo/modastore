@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { useCartStore } from "@/store/cart";
+import Image from "next/image";
 
 interface Variant {
   id: string;
@@ -18,6 +19,7 @@ interface Product {
   brand: string;
   variants: Variant[];
   category: { name: string };
+  images: { url: string; altText: string | null; position: number }[];
 }
 
 export default function ProductoDetallePage() {
@@ -80,8 +82,21 @@ export default function ProductoDetallePage() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
           {/* Imagen */}
-          <div className="aspect-[3/4] bg-gradient-to-br from-zinc-800 to-zinc-900 rounded-3xl border border-white/5 flex items-center justify-center">
-            <p className="text-white/20 text-sm">Sin imagen</p>
+          <div className="aspect-[3/4] rounded-3xl border border-white/5 overflow-hidden relative bg-zinc-900">
+            {product.images[0] ? (
+              <Image
+                src={product.images.sort((a, b) => a.position - b.position)[0].url}
+                alt={product.images[0].altText ?? product.name}
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, 50vw"
+                priority
+              />
+            ) : (
+              <div className="w-full h-full bg-gradient-to-br from-zinc-800 to-zinc-900 flex items-center justify-center">
+                <p className="text-white/20 text-sm">Sin imagen</p>
+              </div>
+            )}
           </div>
 
           {/* Info */}
