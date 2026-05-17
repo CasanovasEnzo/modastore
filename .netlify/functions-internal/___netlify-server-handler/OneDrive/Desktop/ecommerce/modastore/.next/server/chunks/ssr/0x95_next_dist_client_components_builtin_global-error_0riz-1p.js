@@ -1,3 +1,0 @@
-module.exports=[23066,(a,b,c)=>{let{createClientModuleProxy:d}=a.r(91453);a.n(d("[project]/OneDrive/Desktop/ecommerce/modastore/node_modules/next/dist/client/components/builtin/global-error.js <module evaluation>"))},94119,(a,b,c)=>{let{createClientModuleProxy:d}=a.r(91453);a.n(d("[project]/OneDrive/Desktop/ecommerce/modastore/node_modules/next/dist/client/components/builtin/global-error.js"))},7985,a=>{"use strict";a.i(23066);var b=a.i(94119);a.n(b)},94064,a=>{a.n(a.i(7985))}];
-
-//# sourceMappingURL=0x95_next_dist_client_components_builtin_global-error_0riz-1p.js.map
