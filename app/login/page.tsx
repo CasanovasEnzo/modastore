@@ -21,7 +21,7 @@ function LoginForm() {
     const email = (form.elements.namedItem("email") as HTMLInputElement).value
     const password = (form.elements.namedItem("password") as HTMLInputElement).value
 
-    const { error } = await authClient.signIn.email({ email, password })
+    const { data, error } = await authClient.signIn.email({ email, password })
 
     if (error) {
       setError(error.message ?? "Error al iniciar sesión")
@@ -29,7 +29,8 @@ function LoginForm() {
       return
     }
 
-    router.push(redirectTo)
+    const role = (data?.user as { role?: string })?.role
+    router.push(role === "admin" ? "/admin" : redirectTo)
     router.refresh()
   }
 
