@@ -1,0 +1,3 @@
+module.exports=[34983,a=>{"use strict";var b=a.i(81789),c=a.i(4554);a.s(["default",0,function({id:a}){let d=(0,c.useRouter)();async function e(){confirm("¿Eliminar este producto?")&&((await fetch(`/api/admin/products/${a}`,{method:"DELETE"})).ok?d.refresh():alert("Error al eliminar el producto. Intentá de nuevo."))}return(0,b.jsxs)("div",{className:"flex items-center gap-3",children:[(0,b.jsx)("a",{href:`/admin/productos/${a}/editar`,className:"text-xs text-white/40 hover:text-white transition",children:"Editar"}),(0,b.jsx)("button",{onClick:e,className:"text-xs text-red-400/60 hover:text-red-400 transition",children:"Eliminar"})]})}])}];
+
+//# sourceMappingURL=03ci_Desktop_ecommerce_modastore_app_admin_productos_ProductActions_tsx_0b7~2da._.js.map

@@ -92,11 +92,6 @@ export default function PerfilClient({ user, orderCount, hasPassword, providers 
               })}
             </p>
           </div>
-          {providers.includes("google") && (
-            <span className="text-xs border border-white/10 px-3 py-1 rounded-full text-white/40 flex-shrink-0">
-              Google
-            </span>
-          )}
         </div>
 
         {/* Stats */}
