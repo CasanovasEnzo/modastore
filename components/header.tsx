@@ -1,6 +1,7 @@
 import { auth } from "@/lib/auth"
 import { headers } from "next/headers"
 import SignOutButton from "./sign-out-button"
+import CartButton from "./cart-button"
 
 export default async function Header() {
   const session = await auth.api.getSession({
@@ -30,12 +31,7 @@ export default async function Header() {
           ))}
         </nav>
         <div className="flex items-center gap-4">
-          <a
-            href="/carrito"
-            className="text-sm bg-white text-black px-5 py-2 rounded-full font-medium hover:bg-gray-200 transition"
-          >
-            Carrito
-          </a>
+          <CartButton />
           {session ? (
             <div className="flex items-center gap-3">
               <a href="/mis-ordenes" className="text-sm text-white/50 hover:text-white transition duration-200 hidden md:block">
