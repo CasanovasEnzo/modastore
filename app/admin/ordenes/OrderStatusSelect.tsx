@@ -46,15 +46,23 @@ export default function OrderStatusSelect({
     }
   }
 
+  const colorMap: Record<string, string> = {
+    pending:    "text-yellow-400 border-yellow-500/30 bg-yellow-500/10",
+    processing: "text-blue-400 border-blue-500/30 bg-blue-500/10",
+    shipped:    "text-purple-400 border-purple-500/30 bg-purple-500/10",
+    delivered:  "text-green-400 border-green-500/30 bg-green-500/10",
+    cancelled:  "text-red-400 border-red-500/30 bg-red-500/10",
+  }
+
   return (
     <select
       value={status}
       onChange={(e) => handleChange(e.target.value)}
       disabled={loading}
-      className="bg-white/5 border border-white/10 text-white text-xs rounded-xl px-3 py-1.5 focus:outline-none focus:border-white/30 transition disabled:opacity-50 cursor-pointer"
+      className={`border text-[11px] font-medium rounded-full px-3 py-1.5 focus:outline-none transition disabled:opacity-50 cursor-pointer ${colorMap[status] ?? "text-white/40 border-white/10 bg-white/5"}`}
     >
       {statuses.map((s) => (
-        <option key={s.value} value={s.value} className="bg-zinc-900">
+        <option key={s.value} value={s.value} className="bg-zinc-900 text-white">
           {s.label}
         </option>
       ))}

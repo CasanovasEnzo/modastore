@@ -136,20 +136,24 @@ export default function ProductForm({ categories, initial }: ProductFormProps) {
   }
 
   const inputClass =
-    "w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder-white/30 focus:outline-none focus:border-white/30 transition"
-  const labelClass = "block text-xs text-white/40 uppercase tracking-widest mb-2"
+    "w-full bg-white/[0.04] border border-white/[0.08] rounded-lg px-3.5 py-2.5 text-sm text-white placeholder-white/25 focus:outline-none focus:border-white/25 focus:bg-white/[0.06] transition"
+  const labelClass = "block text-[11px] text-white/35 font-medium uppercase tracking-widest mb-1.5"
+  const sectionClass = "bg-white/[0.02] border border-white/[0.07] rounded-xl p-6 space-y-5"
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-8 max-w-2xl">
+    <form onSubmit={handleSubmit} className="space-y-5 max-w-2xl">
       {error && (
-        <div className="border border-red-500/30 bg-red-500/10 text-red-400 text-sm px-4 py-3 rounded-xl">
+        <div className="flex items-center gap-3 border border-red-500/20 bg-red-500/8 text-red-400 text-sm px-4 py-3 rounded-lg">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
           {error}
         </div>
       )}
 
       {/* Basic info */}
-      <div className="border border-white/10 rounded-2xl p-6 space-y-5">
-        <h2 className="text-sm font-semibold text-white/60 uppercase tracking-widest">Info básica</h2>
+      <div className={sectionClass}>
+        <div className="flex items-center gap-2 mb-1">
+          <h2 className="text-xs font-semibold text-white/40 uppercase tracking-widest">Información básica</h2>
+        </div>
 
         <div>
           <label className={labelClass}>Nombre *</label>
@@ -182,16 +186,16 @@ export default function ProductForm({ categories, initial }: ProductFormProps) {
             <label className={labelClass}>Categoría *</label>
             <select className={inputClass} value={categoryId} onChange={(e) => setCategoryId(e.target.value)}>
               {categories.map((c) => (
-                <option key={c.id} value={c.id}>{c.name}</option>
+                <option key={c.id} value={c.id} className="bg-zinc-900">{c.name}</option>
               ))}
             </select>
           </div>
           <div>
             <label className={labelClass}>Género</label>
             <select className={inputClass} value={gender} onChange={(e) => setGender(e.target.value)}>
-              <option value="unisex">Unisex</option>
-              <option value="hombre">Hombre</option>
-              <option value="mujer">Mujer</option>
+              <option value="unisex" className="bg-zinc-900">Unisex</option>
+              <option value="hombre" className="bg-zinc-900">Hombre</option>
+              <option value="mujer" className="bg-zinc-900">Mujer</option>
             </select>
           </div>
           <div>
@@ -200,97 +204,107 @@ export default function ProductForm({ categories, initial }: ProductFormProps) {
           </div>
         </div>
 
-        <label className="flex items-center gap-3 cursor-pointer">
-          <input
-            type="checkbox"
-            checked={isActive}
-            onChange={(e) => setIsActive(e.target.checked)}
-            className="w-4 h-4 rounded accent-white"
-          />
-          <span className="text-sm text-white/60">Producto activo (visible en tienda)</span>
+        <label className="flex items-center gap-3 cursor-pointer group">
+          <div className={`w-9 h-5 rounded-full border transition ${isActive ? "bg-white border-white" : "bg-white/5 border-white/15"}`}
+            onClick={() => setIsActive(!isActive)}>
+            <div className={`w-3.5 h-3.5 rounded-full mt-0.5 transition-all ${isActive ? "bg-black ml-4.5 translate-x-[18px]" : "bg-white/30 ml-0.5"}`} />
+          </div>
+          <input type="checkbox" checked={isActive} onChange={(e) => setIsActive(e.target.checked)} className="hidden" />
+          <span className="text-sm text-white/55 group-hover:text-white/75 transition">Producto activo (visible en tienda)</span>
         </label>
       </div>
 
       {/* Variants */}
-      <div className="border border-white/10 rounded-2xl p-6 space-y-4">
-        <h2 className="text-sm font-semibold text-white/60 uppercase tracking-widest">Variantes</h2>
-        {variants.map((v, i) => (
-          <div key={i} className="grid grid-cols-5 gap-2 items-end">
-            <div>
-              <label className={labelClass}>Talle</label>
-              <input className={inputClass} placeholder="M" value={v.size} onChange={(e) => updateVariant(i, "size", e.target.value)} />
+      <div className={sectionClass}>
+        <h2 className="text-xs font-semibold text-white/40 uppercase tracking-widest">Variantes</h2>
+        <div className="space-y-2">
+          {variants.map((v, i) => (
+            <div key={i} className="grid grid-cols-5 gap-2 items-end">
+              <div>
+                {i === 0 && <label className={labelClass}>Talle</label>}
+                <input className={inputClass} placeholder="M" value={v.size} onChange={(e) => updateVariant(i, "size", e.target.value)} />
+              </div>
+              <div>
+                {i === 0 && <label className={labelClass}>Color</label>}
+                <input className={inputClass} placeholder="Negro" value={v.color} onChange={(e) => updateVariant(i, "color", e.target.value)} />
+              </div>
+              <div>
+                {i === 0 && <label className={labelClass}>Stock</label>}
+                <input className={inputClass} type="number" value={v.stock} onChange={(e) => updateVariant(i, "stock", parseInt(e.target.value) || 0)} />
+              </div>
+              <div>
+                {i === 0 && <label className={labelClass}>SKU</label>}
+                <input className={inputClass} placeholder="ABC-123" value={v.sku} onChange={(e) => updateVariant(i, "sku", e.target.value)} />
+              </div>
+              <button
+                type="button"
+                onClick={() => removeVariant(i)}
+                className={`${i === 0 ? "mt-5" : ""} w-9 h-9 flex items-center justify-center rounded-lg border border-white/[0.07] text-white/25 hover:text-red-400 hover:border-red-500/20 transition`}
+              >
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              </button>
             </div>
-            <div>
-              <label className={labelClass}>Color</label>
-              <input className={inputClass} placeholder="Negro" value={v.color} onChange={(e) => updateVariant(i, "color", e.target.value)} />
-            </div>
-            <div>
-              <label className={labelClass}>Stock</label>
-              <input className={inputClass} type="number" value={v.stock} onChange={(e) => updateVariant(i, "stock", parseInt(e.target.value) || 0)} />
-            </div>
-            <div>
-              <label className={labelClass}>SKU</label>
-              <input className={inputClass} placeholder="ABC-123" value={v.sku} onChange={(e) => updateVariant(i, "sku", e.target.value)} />
-            </div>
-            <button
-              type="button"
-              onClick={() => removeVariant(i)}
-              className="pb-0.5 text-red-400/50 hover:text-red-400 transition text-xs"
-            >
-              ✕
-            </button>
-          </div>
-        ))}
+          ))}
+        </div>
         <button
           type="button"
           onClick={addVariant}
-          className="text-xs text-white/40 hover:text-white transition border border-white/10 px-4 py-2 rounded-xl"
+          className="flex items-center gap-2 text-xs text-white/35 hover:text-white transition border border-dashed border-white/[0.1] hover:border-white/20 px-4 py-2.5 rounded-lg w-full justify-center"
         >
-          + Agregar variante
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Agregar variante
         </button>
       </div>
 
       {/* Images */}
-      <div className="border border-white/10 rounded-2xl p-6 space-y-4">
-        <h2 className="text-sm font-semibold text-white/60 uppercase tracking-widest">Imágenes (URLs)</h2>
-        {images.map((url, i) => (
-          <div key={i} className="flex gap-2 items-center">
-            <input
-              className={`${inputClass} flex-1`}
-              placeholder="https://..."
-              value={url}
-              onChange={(e) => updateImage(i, e.target.value)}
-            />
-            <button
-              type="button"
-              onClick={() => removeImage(i)}
-              className="text-red-400/50 hover:text-red-400 transition text-xs px-2"
-            >
-              ✕
-            </button>
-          </div>
-        ))}
+      <div className={sectionClass}>
+        <h2 className="text-xs font-semibold text-white/40 uppercase tracking-widest">Imágenes (URLs)</h2>
+        <div className="space-y-2">
+          {images.map((url, i) => (
+            <div key={i} className="flex gap-2 items-center">
+              <input
+                className={`${inputClass} flex-1`}
+                placeholder="https://..."
+                value={url}
+                onChange={(e) => updateImage(i, e.target.value)}
+              />
+              <button
+                type="button"
+                onClick={() => removeImage(i)}
+                className="w-9 h-9 flex items-center justify-center rounded-lg border border-white/[0.07] text-white/25 hover:text-red-400 hover:border-red-500/20 transition"
+              >
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              </button>
+            </div>
+          ))}
+        </div>
         <button
           type="button"
           onClick={addImage}
-          className="text-xs text-white/40 hover:text-white transition border border-white/10 px-4 py-2 rounded-xl"
+          className="flex items-center gap-2 text-xs text-white/35 hover:text-white transition border border-dashed border-white/[0.1] hover:border-white/20 px-4 py-2.5 rounded-lg w-full justify-center"
         >
-          + Agregar imagen
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Agregar imagen
         </button>
       </div>
 
       {/* Submit */}
-      <div className="flex gap-3">
+      <div className="flex gap-3 pt-1">
         <button
           type="submit"
           disabled={loading}
-          className="bg-white text-black px-6 py-3 rounded-full text-sm font-semibold hover:bg-gray-100 transition disabled:opacity-50"
+          className="flex items-center gap-2 bg-white text-black px-5 py-2.5 rounded-lg text-sm font-semibold hover:bg-gray-100 transition disabled:opacity-50"
         >
-          {loading ? "Guardando..." : isEdit ? "Guardar cambios" : "Crear producto"}
+          {loading ? (
+            <>
+              <svg className="animate-spin" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
+              Guardando...
+            </>
+          ) : isEdit ? "Guardar cambios" : "Crear producto"}
         </button>
         <a
           href="/admin/productos"
-          className="border border-white/10 px-6 py-3 rounded-full text-sm font-medium text-white/60 hover:text-white hover:border-white/30 transition"
+          className="px-5 py-2.5 rounded-lg text-sm font-medium text-white/40 hover:text-white border border-white/[0.07] hover:border-white/20 transition"
         >
           Cancelar
         </a>

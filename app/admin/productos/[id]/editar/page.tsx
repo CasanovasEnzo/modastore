@@ -40,11 +40,15 @@ export default async function EditarProductoPage({
   }
 
   return (
-    <div className="px-10 py-10">
-      <div className="mb-10">
-        <p className="text-xs text-white/30 tracking-widest uppercase mb-2">Admin · Productos</p>
-        <h1 className="text-3xl font-bold tracking-tight">Editar producto</h1>
-        <p className="text-white/40 text-sm mt-1">{product.name}</p>
+    <div className="px-8 py-8">
+      <div className="flex items-center gap-2 text-xs text-white/25 mb-6">
+        <a href="/admin/productos" className="hover:text-white/50 transition">Productos</a>
+        <span>/</span>
+        <span className="text-white/50 truncate max-w-[200px]">{product.name}</span>
+      </div>
+      <div className="mb-8">
+        <h1 className="text-2xl font-bold tracking-tight">Editar producto</h1>
+        <p className="text-sm text-white/30 mt-1">{product.name}</p>
       </div>
       <ProductForm categories={categories} initial={initial} />
     </div>

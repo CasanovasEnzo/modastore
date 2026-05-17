@@ -19,55 +19,57 @@ export default async function AdminOrdenesPage() {
   })
 
   return (
-    <div className="px-10 py-10">
-      <div className="mb-10">
-        <p className="text-xs text-white/30 tracking-widest uppercase mb-2">Admin</p>
-        <h1 className="text-3xl font-bold tracking-tight">Órdenes</h1>
+    <div className="px-8 py-8">
+      <div className="mb-8">
+        <h1 className="text-2xl font-bold tracking-tight">Órdenes</h1>
+        <p className="text-sm text-white/30 mt-1">{orders.length} órdenes en total</p>
       </div>
 
-      <div className="border border-white/10 rounded-2xl overflow-hidden">
+      <div className="bg-white/[0.02] border border-white/[0.07] rounded-xl overflow-hidden">
         {orders.length === 0 ? (
-          <p className="text-white/30 text-sm px-6 py-8">Sin órdenes todavía.</p>
+          <div className="text-center py-16">
+            <p className="text-white/20 text-sm">Sin órdenes todavía.</p>
+          </div>
         ) : (
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-white/10 text-white/40 text-xs uppercase tracking-widest">
-                <th className="text-left px-6 py-3">ID</th>
-                <th className="text-left px-6 py-3">Fecha</th>
-                <th className="text-left px-6 py-3">Cliente</th>
-                <th className="text-left px-6 py-3">Items</th>
-                <th className="text-left px-6 py-3">Total</th>
-                <th className="text-left px-6 py-3">Estado</th>
+              <tr className="border-b border-white/[0.07]">
+                <th className="text-left px-5 py-3 text-[11px] text-white/30 font-medium uppercase tracking-widest">ID</th>
+                <th className="text-left px-5 py-3 text-[11px] text-white/30 font-medium uppercase tracking-widest">Fecha</th>
+                <th className="text-left px-5 py-3 text-[11px] text-white/30 font-medium uppercase tracking-widest">Cliente</th>
+                <th className="text-left px-5 py-3 text-[11px] text-white/30 font-medium uppercase tracking-widest">Items</th>
+                <th className="text-left px-5 py-3 text-[11px] text-white/30 font-medium uppercase tracking-widest">Total</th>
+                <th className="text-left px-5 py-3 text-[11px] text-white/30 font-medium uppercase tracking-widest">Estado</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="divide-y divide-white/[0.04]">
               {orders.map((order) => (
-                <tr key={order.id} className="border-b border-white/5 hover:bg-white/[0.02] transition">
-                  <td className="px-6 py-4 font-mono text-white/50 text-xs">
+                <tr key={order.id} className="hover:bg-white/[0.02] transition">
+                  <td className="px-5 py-3.5 font-mono text-[11px] text-white/40">
                     #{order.id.slice(-8).toUpperCase()}
                   </td>
-                  <td className="px-6 py-4 text-white/50 text-xs">
+                  <td className="px-5 py-3.5 text-white/40 text-xs whitespace-nowrap">
                     {new Date(order.createdAt).toLocaleDateString("es-AR", {
                       day: "numeric",
                       month: "short",
                       year: "numeric",
                     })}
                   </td>
-                  <td className="px-6 py-4">
-                    <p className="font-medium">{order.user.name}</p>
-                    <p className="text-white/40 text-xs">{order.user.email}</p>
+                  <td className="px-5 py-3.5">
+                    <p className="font-medium text-white/85">{order.user.name}</p>
+                    <p className="text-[11px] text-white/30">{order.user.email}</p>
                   </td>
-                  <td className="px-6 py-4 text-white/60">
+                  <td className="px-5 py-3.5 text-white/40 max-w-[200px]">
                     {order.items.map((item) => (
-                      <p key={item.id} className="text-xs">
+                      <p key={item.id} className="text-[11px] truncate">
                         {item.name} · {item.size} · x{item.quantity}
                       </p>
                     ))}
                   </td>
-                  <td className="px-6 py-4 font-semibold">
+                  <td className="px-5 py-3.5 font-semibold text-white/80 whitespace-nowrap">
                     ${Number(order.total).toLocaleString("es-AR")}
                   </td>
-                  <td className="px-6 py-4">
+                  <td className="px-5 py-3.5">
                     <OrderStatusSelect orderId={order.id} currentStatus={order.status} />
                   </td>
                 </tr>

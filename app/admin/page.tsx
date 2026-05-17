@@ -18,34 +18,76 @@ export default async function AdminDashboard() {
   })
 
   const stats = [
-    { label: "Productos", value: productCount, suffix: "" },
-    { label: "Órdenes", value: orderCount, suffix: "" },
-    { label: "Usuarios", value: userCount, suffix: "" },
-    { label: "Ingresos", value: Number(revenue._sum.total ?? 0).toLocaleString("es-AR"), suffix: "$" },
+    {
+      label: "Productos",
+      value: productCount,
+      prefix: "",
+      icon: (
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+        </svg>
+      ),
+    },
+    {
+      label: "Órdenes",
+      value: orderCount,
+      prefix: "",
+      icon: (
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2" />
+          <rect x="9" y="3" width="6" height="4" rx="1" />
+        </svg>
+      ),
+    },
+    {
+      label: "Usuarios",
+      value: userCount,
+      prefix: "",
+      icon: (
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" />
+          <path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" />
+        </svg>
+      ),
+    },
+    {
+      label: "Ingresos",
+      value: Number(revenue._sum.total ?? 0).toLocaleString("es-AR"),
+      prefix: "$",
+      icon: (
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+          <line x1="12" y1="1" x2="12" y2="23" /><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+        </svg>
+      ),
+    },
   ]
 
-  const statusLabel: Record<string, string> = {
-    pending: "Pendiente",
-    processing: "En proceso",
-    shipped: "Enviado",
-    delivered: "Entregado",
-    cancelled: "Cancelado",
+  const statusConfig: Record<string, { label: string; className: string }> = {
+    pending:    { label: "Pendiente",   className: "bg-yellow-500/10 text-yellow-400 border-yellow-500/20" },
+    processing: { label: "En proceso",  className: "bg-blue-500/10 text-blue-400 border-blue-500/20" },
+    shipped:    { label: "Enviado",     className: "bg-purple-500/10 text-purple-400 border-purple-500/20" },
+    delivered:  { label: "Entregado",   className: "bg-green-500/10 text-green-400 border-green-500/20" },
+    cancelled:  { label: "Cancelado",   className: "bg-red-500/10 text-red-400 border-red-500/20" },
   }
 
   return (
-    <div className="px-10 py-10">
-      <div className="mb-10">
-        <p className="text-xs text-white/30 tracking-widest uppercase mb-2">Panel de administración</p>
-        <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
+    <div className="px-8 py-8">
+      {/* Header */}
+      <div className="mb-8">
+        <h1 className="text-2xl font-bold tracking-tight">Dashboard</h1>
+        <p className="text-sm text-white/30 mt-1">Resumen general del negocio</p>
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-8">
         {stats.map((stat) => (
-          <div key={stat.label} className="border border-white/10 rounded-2xl p-5">
-            <p className="text-xs text-white/40 uppercase tracking-widest mb-3">{stat.label}</p>
-            <p className="text-2xl font-bold">
-              {stat.suffix}{stat.value}
+          <div key={stat.label} className="bg-white/[0.03] border border-white/[0.07] rounded-xl p-5 hover:border-white/15 transition">
+            <div className="flex items-center justify-between mb-4">
+              <p className="text-xs text-white/35 font-medium">{stat.label}</p>
+              <span className="text-white/20">{stat.icon}</span>
+            </div>
+            <p className="text-2xl font-bold tracking-tight">
+              {stat.prefix}{stat.value}
             </p>
           </div>
         ))}
@@ -53,44 +95,48 @@ export default async function AdminDashboard() {
 
       {/* Recent orders */}
       <div>
-        <h2 className="text-sm font-semibold text-white/60 uppercase tracking-widest mb-4">
-          Últimas órdenes
-        </h2>
-        <div className="border border-white/10 rounded-2xl overflow-hidden">
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-sm font-semibold text-white/50 uppercase tracking-widest">Últimas órdenes</h2>
+          <a href="/admin/ordenes" className="text-xs text-white/30 hover:text-white transition">Ver todas →</a>
+        </div>
+        <div className="bg-white/[0.02] border border-white/[0.07] rounded-xl overflow-hidden">
           {recentOrders.length === 0 ? (
-            <p className="text-white/30 text-sm px-6 py-8">Sin órdenes todavía.</p>
+            <p className="text-white/30 text-sm px-6 py-10 text-center">Sin órdenes todavía.</p>
           ) : (
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-white/10 text-white/40 text-xs uppercase tracking-widest">
-                  <th className="text-left px-6 py-3">ID</th>
-                  <th className="text-left px-6 py-3">Cliente</th>
-                  <th className="text-left px-6 py-3">Items</th>
-                  <th className="text-left px-6 py-3">Total</th>
-                  <th className="text-left px-6 py-3">Estado</th>
+                <tr className="border-b border-white/[0.07]">
+                  <th className="text-left px-5 py-3 text-[11px] text-white/30 font-medium uppercase tracking-widest">ID</th>
+                  <th className="text-left px-5 py-3 text-[11px] text-white/30 font-medium uppercase tracking-widest">Cliente</th>
+                  <th className="text-left px-5 py-3 text-[11px] text-white/30 font-medium uppercase tracking-widest">Items</th>
+                  <th className="text-left px-5 py-3 text-[11px] text-white/30 font-medium uppercase tracking-widest">Total</th>
+                  <th className="text-left px-5 py-3 text-[11px] text-white/30 font-medium uppercase tracking-widest">Estado</th>
                 </tr>
               </thead>
-              <tbody>
-                {recentOrders.map((order) => (
-                  <tr key={order.id} className="border-b border-white/5 hover:bg-white/[0.02] transition">
-                    <td className="px-6 py-4 font-mono text-white/50">
-                      #{order.id.slice(-8).toUpperCase()}
-                    </td>
-                    <td className="px-6 py-4">
-                      <p className="font-medium">{order.user.name}</p>
-                      <p className="text-white/40 text-xs">{order.user.email}</p>
-                    </td>
-                    <td className="px-6 py-4 text-white/60">{order.items.length}</td>
-                    <td className="px-6 py-4 font-semibold">
-                      ${Number(order.total).toLocaleString("es-AR")}
-                    </td>
-                    <td className="px-6 py-4">
-                      <span className="text-xs bg-white/5 border border-white/10 px-2.5 py-1 rounded-full">
-                        {statusLabel[order.status] ?? order.status}
-                      </span>
-                    </td>
-                  </tr>
-                ))}
+              <tbody className="divide-y divide-white/[0.04]">
+                {recentOrders.map((order) => {
+                  const sc = statusConfig[order.status] ?? { label: order.status, className: "bg-white/5 text-white/40 border-white/10" }
+                  return (
+                    <tr key={order.id} className="hover:bg-white/[0.02] transition">
+                      <td className="px-5 py-3.5 font-mono text-[11px] text-white/40">
+                        #{order.id.slice(-8).toUpperCase()}
+                      </td>
+                      <td className="px-5 py-3.5">
+                        <p className="text-sm font-medium text-white/80">{order.user.name}</p>
+                        <p className="text-[11px] text-white/30">{order.user.email}</p>
+                      </td>
+                      <td className="px-5 py-3.5 text-white/50 text-sm">{order.items.length}</td>
+                      <td className="px-5 py-3.5 font-semibold text-white/80">
+                        ${Number(order.total).toLocaleString("es-AR")}
+                      </td>
+                      <td className="px-5 py-3.5">
+                        <span className={`text-[11px] font-medium px-2.5 py-1 rounded-full border ${sc.className}`}>
+                          {sc.label}
+                        </span>
+                      </td>
+                    </tr>
+                  )
+                })}
               </tbody>
             </table>
           )}

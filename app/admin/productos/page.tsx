@@ -9,61 +9,70 @@ export default async function AdminProductosPage() {
   })
 
   return (
-    <div className="px-10 py-10">
-      <div className="flex items-center justify-between mb-10">
+    <div className="px-8 py-8">
+      <div className="flex items-center justify-between mb-8">
         <div>
-          <p className="text-xs text-white/30 tracking-widest uppercase mb-2">Admin</p>
-          <h1 className="text-3xl font-bold tracking-tight">Productos</h1>
+          <h1 className="text-2xl font-bold tracking-tight">Productos</h1>
+          <p className="text-sm text-white/30 mt-1">{products.length} productos en total</p>
         </div>
         <Link
           href="/admin/productos/nuevo"
-          className="bg-white text-black px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-gray-100 transition"
+          className="flex items-center gap-2 bg-white text-black px-4 py-2.5 rounded-lg text-sm font-semibold hover:bg-gray-100 transition"
         >
-          + Nuevo producto
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+            <line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" />
+          </svg>
+          Nuevo producto
         </Link>
       </div>
 
-      <div className="border border-white/10 rounded-2xl overflow-hidden">
+      <div className="bg-white/[0.02] border border-white/[0.07] rounded-xl overflow-hidden">
         {products.length === 0 ? (
-          <p className="text-white/30 text-sm px-6 py-8">Sin productos.</p>
+          <div className="text-center py-16">
+            <p className="text-white/20 text-sm">Sin productos todavía.</p>
+          </div>
         ) : (
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-white/10 text-white/40 text-xs uppercase tracking-widest">
-                <th className="text-left px-6 py-3">Nombre</th>
-                <th className="text-left px-6 py-3">Categoría</th>
-                <th className="text-left px-6 py-3">Género</th>
-                <th className="text-left px-6 py-3">Precio</th>
-                <th className="text-left px-6 py-3">Stock</th>
-                <th className="text-left px-6 py-3">Estado</th>
-                <th className="px-6 py-3"></th>
+              <tr className="border-b border-white/[0.07]">
+                <th className="text-left px-5 py-3 text-[11px] text-white/30 font-medium uppercase tracking-widest">Producto</th>
+                <th className="text-left px-5 py-3 text-[11px] text-white/30 font-medium uppercase tracking-widest">Categoría</th>
+                <th className="text-left px-5 py-3 text-[11px] text-white/30 font-medium uppercase tracking-widest">Género</th>
+                <th className="text-left px-5 py-3 text-[11px] text-white/30 font-medium uppercase tracking-widest">Precio</th>
+                <th className="text-left px-5 py-3 text-[11px] text-white/30 font-medium uppercase tracking-widest">Stock</th>
+                <th className="text-left px-5 py-3 text-[11px] text-white/30 font-medium uppercase tracking-widest">Estado</th>
+                <th className="px-5 py-3"></th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="divide-y divide-white/[0.04]">
               {products.map((product) => {
                 const totalStock = product.variants.reduce((acc, v) => acc + v.stock, 0)
                 return (
-                  <tr key={product.id} className="border-b border-white/5 hover:bg-white/[0.02] transition">
-                    <td className="px-6 py-4">
-                      <p className="font-medium">{product.name}</p>
-                      <p className="text-white/30 text-xs font-mono">{product.slug}</p>
+                  <tr key={product.id} className="hover:bg-white/[0.02] transition">
+                    <td className="px-5 py-3.5">
+                      <p className="font-medium text-white/85">{product.name}</p>
+                      <p className="text-[11px] text-white/25 font-mono mt-0.5">{product.slug}</p>
                     </td>
-                    <td className="px-6 py-4 text-white/60 capitalize">{product.category.name}</td>
-                    <td className="px-6 py-4 text-white/60 capitalize">{product.gender}</td>
-                    <td className="px-6 py-4 font-semibold">
+                    <td className="px-5 py-3.5 text-white/50 capitalize text-sm">{product.category.name}</td>
+                    <td className="px-5 py-3.5 text-white/50 capitalize text-sm">{product.gender}</td>
+                    <td className="px-5 py-3.5 font-semibold text-white/80">
                       ${Number(product.price).toLocaleString("es-AR")}
                     </td>
-                    <td className="px-6 py-4 text-white/60">{totalStock}</td>
-                    <td className="px-6 py-4">
-                      <span className={`text-xs px-2.5 py-1 rounded-full border ${
+                    <td className="px-5 py-3.5">
+                      <span className={`text-sm font-medium ${totalStock === 0 ? "text-red-400" : "text-white/60"}`}>
+                        {totalStock}
+                      </span>
+                    </td>
+                    <td className="px-5 py-3.5">
+                      <span className={`text-[11px] font-medium px-2.5 py-1 rounded-full border ${
                         product.isActive
-                          ? "border-green-500/30 text-green-400 bg-green-500/10"
-                          : "border-white/10 text-white/30 bg-white/5"
+                          ? "bg-green-500/10 text-green-400 border-green-500/20"
+                          : "bg-white/5 text-white/30 border-white/10"
                       }`}>
                         {product.isActive ? "Activo" : "Inactivo"}
                       </span>
                     </td>
-                    <td className="px-6 py-4">
+                    <td className="px-5 py-3.5">
                       <ProductActions id={product.id} />
                     </td>
                   </tr>
