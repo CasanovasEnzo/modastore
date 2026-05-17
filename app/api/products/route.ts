@@ -27,7 +27,7 @@ export async function GET(req: NextRequest) {
 
     return NextResponse.json(products);
   } catch (error) {
-    console.error(error);
+
     return NextResponse.json({ error: "Error al obtener productos" }, { status: 500 });
   }
 }

@@ -23,7 +23,7 @@ export async function GET(
 
     return NextResponse.json(product);
   } catch (error) {
-    console.error("Error detalle:", error);
+
     return NextResponse.json({ error: "Error interno" }, { status: 500 });
   }
 }

@@ -1,10 +1,11 @@
-import { auth } from "@/lib/auth"
-import { headers } from "next/headers"
+import { requireAdmin } from "@/lib/admin"
+import { redirect } from "next/navigation"
 import AdminNav from "./components/AdminNav"
 import Link from "next/link"
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
-  const session = await auth.api.getSession({ headers: await headers() })
+  const admin = await requireAdmin()
+  if (!admin) redirect("/login")
 
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-white flex">
@@ -20,7 +21,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
         </div>
 
         <div className="px-6 py-4 border-t border-white/10 space-y-2">
-          <p className="text-xs text-white/30 truncate">{session?.user.email}</p>
+          <p className="text-xs text-white/30 truncate">{admin.user.email}</p>
           <Link
             href="/"
             className="text-xs text-white/40 hover:text-white transition flex items-center gap-1.5"
