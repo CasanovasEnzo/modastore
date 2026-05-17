@@ -35,7 +35,7 @@ function LoginForm() {
   }
 
   async function handleGoogle() {
-    await authClient.signIn.social({ provider: "google", callbackURL: "/api/auth/redirect" })
+    await authClient.signIn.social({ provider: "google", callbackURL: "/auth/callback" })
   }
 
   return (
