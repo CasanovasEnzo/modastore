@@ -1,4 +1,13 @@
-export default function HomePage() {
+import { auth } from "@/lib/auth"
+import { headers } from "next/headers"
+import { redirect } from "next/navigation"
+
+export default async function HomePage() {
+  const session = await auth.api.getSession({ headers: await headers() })
+  if (session && (session.user as { role?: string }).role === "admin") {
+    redirect("/admin")
+  }
+
   return (
     <main className="min-h-screen bg-[#0a0a0a] text-white font-sans">
       {/* Hero */}
