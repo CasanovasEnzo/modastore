@@ -80,22 +80,22 @@ function ProductosContent() {
 
   return (
     <main className="min-h-screen bg-[#0a0a0a] text-white">
-      <div className="max-w-7xl mx-auto px-8 pt-32 pb-24">
-        <div className="mb-12">
+      <div className="max-w-7xl mx-auto px-5 md:px-8 pt-24 md:pt-32 pb-16 md:pb-24">
+        <div className="mb-8 md:mb-12">
           <p className="text-xs text-white/30 tracking-widest uppercase mb-3">Colección 2025</p>
-          <h1 className="text-5xl font-bold tracking-tight">{titulo}</h1>
+          <h1 className="text-3xl md:text-5xl font-bold tracking-tight">{titulo}</h1>
         </div>
 
         {/* Filtros */}
-        <div className="flex flex-col gap-4 mb-12">
+        <div className="flex flex-col gap-3 mb-8 md:mb-12">
           {/* Género */}
-          <div className="flex gap-2 flex-wrap items-center">
-            <span className="text-xs text-white/30 uppercase tracking-widest w-20">Género</span>
+          <div className="flex gap-2 items-center overflow-x-auto no-scrollbar pb-1">
+            <span className="text-xs text-white/30 uppercase tracking-widest flex-shrink-0 mr-1">Género</span>
             {GENEROS.map((g) => (
               <button
                 key={g.value}
                 onClick={() => setFilter("genero", g.value)}
-                className={`px-4 py-2 rounded-full text-sm transition duration-200 border ${
+                className={`flex-shrink-0 px-4 py-2 rounded-full text-sm transition duration-200 border ${
                   genero === g.value
                     ? "bg-white text-black border-white"
                     : "border-white/20 text-white/50 hover:border-white/50 hover:text-white"
@@ -107,13 +107,13 @@ function ProductosContent() {
           </div>
 
           {/* Categoría */}
-          <div className="flex gap-2 flex-wrap items-center">
-            <span className="text-xs text-white/30 uppercase tracking-widest w-20">Categoría</span>
+          <div className="flex gap-2 items-center overflow-x-auto no-scrollbar pb-1">
+            <span className="text-xs text-white/30 uppercase tracking-widest flex-shrink-0 mr-1">Categoría</span>
             {CATEGORIAS.map((c) => (
               <button
                 key={c.value}
                 onClick={() => setFilter("categoria", c.value)}
-                className={`px-4 py-2 rounded-full text-sm transition duration-200 border ${
+                className={`flex-shrink-0 px-4 py-2 rounded-full text-sm transition duration-200 border ${
                   categoria === c.value
                     ? "bg-white text-black border-white"
                     : "border-white/20 text-white/50 hover:border-white/50 hover:text-white"
@@ -125,13 +125,13 @@ function ProductosContent() {
           </div>
 
           {/* Talle */}
-          <div className="flex gap-2 flex-wrap items-center">
-            <span className="text-xs text-white/30 uppercase tracking-widest w-20">Talle</span>
+          <div className="flex gap-2 items-center overflow-x-auto no-scrollbar pb-1">
+            <span className="text-xs text-white/30 uppercase tracking-widest flex-shrink-0 mr-1">Talle</span>
             {["XS", "S", "M", "L", "XL", "XXL"].map((s) => (
               <button
                 key={s}
                 onClick={() => setFilter("talle", talle === s ? "" : s)}
-                className={`px-4 py-2 rounded-full text-sm transition duration-200 border ${
+                className={`flex-shrink-0 px-4 py-2 rounded-full text-sm transition duration-200 border ${
                   talle === s
                     ? "bg-white text-black border-white"
                     : "border-white/20 text-white/50 hover:border-white/50 hover:text-white"

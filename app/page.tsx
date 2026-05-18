@@ -12,7 +12,7 @@ export default async function HomePage() {
   return (
     <main className="min-h-screen bg-[#0a0a0a] text-white font-sans">
       {/* Hero */}
-      <section className="relative min-h-screen flex flex-col items-center justify-center text-center px-6 overflow-hidden">
+      <section className="relative min-h-screen flex flex-col items-center justify-center text-center px-5 md:px-6 overflow-hidden">
         {/* Glow background */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
           <div className="w-[600px] h-[600px] bg-white/5 rounded-full blur-3xl" />
@@ -21,7 +21,7 @@ export default async function HomePage() {
         <p className="text-xs font-semibold tracking-[0.3em] text-white/40 uppercase mb-6">
           Colección Otoño — Invierno 2025
         </p>
-        <h1 className="text-7xl md:text-9xl font-bold tracking-tighter leading-none mb-8">
+        <h1 className="text-6xl md:text-9xl font-bold tracking-tighter leading-none mb-8">
           Menos es<br />
           <span className="text-white/20">más.</span>
         </h1>
@@ -40,18 +40,18 @@ export default async function HomePage() {
         </div>
 
         {/* Hero grid de imágenes */}
-        <div className="mt-24 w-full max-w-5xl grid grid-cols-3 gap-4">
-          <div className="col-span-2 aspect-[16/9] rounded-2xl overflow-hidden relative">
+        <div className="mt-16 w-full max-w-5xl grid grid-cols-1 md:grid-cols-3 gap-3">
+          <div className="md:col-span-2 aspect-[4/3] md:aspect-[16/9] rounded-2xl overflow-hidden relative">
             <Image
               src="https://images.unsplash.com/photo-1445205170230-053b83016050?w=1200&q=80"
               alt="Colección Modastore"
               fill
               className="object-cover"
-              sizes="66vw"
+              sizes="(max-width: 768px) 100vw, 66vw"
               priority
             />
           </div>
-          <div className="flex flex-col gap-4">
+          <div className="hidden md:flex flex-col gap-3">
             <div className="flex-1 rounded-2xl overflow-hidden relative min-h-[120px]">
               <Image
                 src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80"
@@ -75,16 +75,16 @@ export default async function HomePage() {
       </section>
 
       {/* Statement */}
-      <section className="max-w-4xl mx-auto px-6 py-32 text-center">
-        <h2 className="text-4xl md:text-6xl font-bold tracking-tight leading-tight text-white/90">
+      <section className="max-w-4xl mx-auto px-5 md:px-6 py-14 md:py-32 text-center">
+        <h2 className="text-2xl md:text-6xl font-bold tracking-tight leading-tight text-white/90">
           Diseñado para durar.<br />
           <span className="text-white/30">No para la temporada.</span>
         </h2>
       </section>
 
       {/* Categorías */}
-      <section className="max-w-7xl mx-auto px-8 pb-24">
-        <div className="grid grid-cols-3 gap-4">
+      <section className="max-w-7xl mx-auto px-5 md:px-8 pb-16 md:pb-24">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 md:gap-4">
           {[
             { name: "Remeras", slug: "remeras", items: "5 productos", img: "https://images.unsplash.com/photo-1529374255404-311a2a4f1fd9?w=800&q=80" },
             { name: "Pantalones", slug: "pantalones", items: "3 productos", img: "https://images.unsplash.com/photo-1542272604-787c3835535d?w=800&q=80" },
@@ -100,7 +100,7 @@ export default async function HomePage() {
                 sizes="33vw"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-              <div className="relative p-8">
+              <div className="relative p-5 md:p-8">
                 <p className="text-xs text-white/50 mb-2">{cat.items}</p>
                 <div className="flex items-center justify-between">
                   <p className="text-2xl font-bold">{cat.name}</p>
@@ -113,11 +113,11 @@ export default async function HomePage() {
       </section>
 
       {/* Productos destacados */}
-      <section className="max-w-7xl mx-auto px-8 pb-24">
-        <div className="flex items-end justify-between mb-12">
+      <section className="max-w-7xl mx-auto px-5 md:px-8 pb-16 md:pb-24">
+        <div className="flex items-end justify-between mb-8 md:mb-12">
           <div>
             <p className="text-xs text-white/30 tracking-widest uppercase mb-2">Selección</p>
-            <h2 className="text-4xl font-bold tracking-tight">Más vendidos</h2>
+            <h2 className="text-2xl md:text-4xl font-bold tracking-tight">Más vendidos</h2>
           </div>
           <a href="/productos" className="text-sm text-white/40 hover:text-white transition">Ver todos →</a>
         </div>
@@ -151,10 +151,10 @@ export default async function HomePage() {
       </section>
 
       {/* Banner envío */}
-      <section className="mx-8 mb-24 border border-white/10 rounded-3xl px-12 py-20 text-center bg-gradient-to-br from-white/5 to-transparent">
+      <section className="mx-4 md:mx-8 mb-16 md:mb-24 border border-white/10 rounded-3xl px-6 md:px-12 py-14 md:py-20 text-center bg-gradient-to-br from-white/5 to-transparent">
         <p className="text-xs tracking-[0.3em] text-white/30 uppercase mb-4">Beneficio exclusivo</p>
-        <h2 className="text-4xl font-bold mb-4 tracking-tight">Envío gratis a todo el país</h2>
-        <p className="text-white/40 mb-10 text-lg">En compras mayores a $50.000 · Entrega en 48hs hábiles</p>
+        <h2 className="text-2xl md:text-4xl font-bold mb-3 md:mb-4 tracking-tight">Envío gratis a todo el país</h2>
+        <p className="text-white/40 mb-7 md:mb-10 text-sm md:text-lg">En compras mayores a $50.000 · Entrega en 48hs hábiles</p>
         <a href="/productos"
           className="bg-white text-black px-10 py-4 rounded-full text-sm font-semibold hover:bg-gray-100 transition">
           Comprar ahora
@@ -162,10 +162,10 @@ export default async function HomePage() {
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-white/10 py-12 px-8">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
+      <footer className="border-t border-white/10 py-10 px-5 md:px-8">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-4 md:justify-between">
           <p className="text-sm font-semibold">MODASTORE</p>
-          <p className="text-sm text-white/30">© 2025 · Todos los derechos reservados</p>
+          <p className="text-sm text-white/30 text-center">© 2025 · Todos los derechos reservados</p>
           <div className="flex gap-6">
             {["Instagram", "TikTok", "WhatsApp"].map((s) => (
               <a key={s} href="#" className="text-sm text-white/30 hover:text-white transition">{s}</a>

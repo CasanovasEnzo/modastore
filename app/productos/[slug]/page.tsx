@@ -72,7 +72,7 @@ export default function ProductoDetallePage() {
 
   return (
     <main className="min-h-screen bg-[#0a0a0a] text-white">
-      <div className="max-w-7xl mx-auto px-8 pt-32 pb-24">
+      <div className="max-w-7xl mx-auto px-5 md:px-8 pt-24 md:pt-32 pb-16 md:pb-24">
         {/* Breadcrumb */}
         <p className="text-sm text-white/30 mb-12">
           <a href="/productos" className="hover:text-white transition">Productos</a>
@@ -105,8 +105,8 @@ export default function ProductoDetallePage() {
               <p className="text-xs text-white/30 tracking-widest uppercase mb-3">
                 {product.category?.name} · {product.brand}
               </p>
-              <h1 className="text-4xl font-bold tracking-tight mb-4">{product.name}</h1>
-              <p className="text-3xl font-semibold text-white">
+              <h1 className="text-2xl md:text-4xl font-bold tracking-tight mb-4">{product.name}</h1>
+              <p className="text-2xl md:text-3xl font-semibold text-white">
                 ${Number(product.price).toLocaleString("es-AR")}
               </p>
             </div>
